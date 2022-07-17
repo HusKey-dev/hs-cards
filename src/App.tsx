@@ -1,10 +1,13 @@
 import axios from "axios";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 
 import "./app.scss";
+import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
 
 const theme = createTheme({
 	palette: {
@@ -36,11 +39,19 @@ function App() {
 
 	return (
 		<div className="App">
-			<ThemeProvider theme={theme}>
-				<Header />
-				<Main />
-				<button onClick={handleClick}>Click me</button>
-			</ThemeProvider>
+			<Router>
+				<ThemeProvider theme={theme}>
+					<Header />
+					<div className="container">
+						<Routes>
+							<Route path="" element={<Main />} />
+							<Route path="/signin" element={<SignIn />} />
+							<Route path="/signup" element={<SignUp />} />
+						</Routes>
+						<button onClick={handleClick}>Click me</button>
+					</div>
+				</ThemeProvider>
+			</Router>
 		</div>
 	);
 }

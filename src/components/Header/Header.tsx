@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import Logo from "../Logo/Logo";
 import ProfileControls from "../ProfileControls/ProfileControls";
 
@@ -8,7 +10,9 @@ function Header() {
 	return (
 		<header className="header">
 			<div className="container header__content">
-				<Logo />
+				<Link to="/">
+					<Logo />
+				</Link>
 				<ProfileControls />
 			</div>
 		</header>
