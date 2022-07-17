@@ -5,8 +5,6 @@ import { SettingsInputAntennaTwoTone } from "@mui/icons-material";
 
 const StyledTextField = styled(TextField)(() => ({
 	"& fieldset": {
-		// display: "flex",
-		// alignItems: "center",
 		borderTopRightRadius: "0px",
 		borderBottomRightRadius: "0px",
 	},
@@ -15,11 +13,13 @@ const StyledTextField = styled(TextField)(() => ({
 function SearchPanel() {
 	const inputEl = useRef<any>(null);
 	const [height, setHeight] = useState<string>("0px");
+
 	useEffect(() => {
 		if (height === "0px") {
 			setHeight(inputEl.current?.clientHeight + "px");
 		}
 	}, []);
+
 	return (
 		<div>
 			<StyledTextField

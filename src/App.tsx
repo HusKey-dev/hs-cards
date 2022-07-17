@@ -1,8 +1,9 @@
-import React from "react";
-import Header from "./components/Header/Header";
 import axios from "axios";
-import Main from "./components/Main/Main";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import Header from "./components/Header/Header";
+import Main from "./components/Main/Main";
+
 import "./app.scss";
 
 const theme = createTheme({
@@ -18,7 +19,7 @@ const theme = createTheme({
 
 function App() {
 	// This part is temporary exaple of api usage and will be moved to redux
-	const BASE_URL = "https://omgvamp-hearthstone-v1.p.rapidapi.com";
+	const BASE_URL: string = "https://omgvamp-hearthstone-v1.p.rapidapi.com";
 	const options = {
 		headers: {
 			"X-RapidAPI-Key":
