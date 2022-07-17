@@ -1,58 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import axios from "axios";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import Header from "./components/Header/Header";
+import Main from "./components/Main/Main";
+
+import "./app.scss";
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: "#1976d2",
+		},
+		secondary: {
+			main: "#9c27b0",
+		},
+	},
+});
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+	// This part is temporary exaple of api usage and will be moved to redux
+	const BASE_URL: string = "https://omgvamp-hearthstone-v1.p.rapidapi.com";
+	const options = {
+		headers: {
+			"X-RapidAPI-Key":
+				"f5a34a1d05msh6cefd8e196dee44p1bb0b5jsnae588fd2281a",
+			"X-RapidAPI-Host": "omgvamp-hearthstone-v1.p.rapidapi.com",
+			locale: "ruRU",
+		},
+		params: { collectible: "1", locale: "ruRU" },
+	};
+	const handleClick = async () => {
+		let res = await axios.get(`${BASE_URL}/cards/EX1_572`, options);
+		console.log(res);
+	};
+
+	return (
+		<div className="App">
+			<ThemeProvider theme={theme}>
+				<Header />
+				<Main />
+				<button onClick={handleClick}>Click me</button>
+			</ThemeProvider>
+		</div>
+	);
 }
 
 export default App;
