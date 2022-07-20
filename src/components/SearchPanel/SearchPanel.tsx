@@ -1,7 +1,6 @@
 import { TextField, Button, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import React, { useEffect, useRef, useState } from "react";
-import { SettingsInputAntennaTwoTone } from "@mui/icons-material";
+import { useEffect, useRef, useState } from "react";
 
 const StyledTextField = styled(TextField)(() => ({
 	"& fieldset": {

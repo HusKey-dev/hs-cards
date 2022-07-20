@@ -7,3 +7,16 @@
 .padding-1 {
 	padding: 1rem;
 }
+
+.App {
+	display: grid;
+	min-height: 100vh;
+	grid-auto-rows: auto 1fr;
+	// justify-content: stretch;
+}
+
+.content {
+	.container {
+		height: 100%;
+	}
+}

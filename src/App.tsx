@@ -42,13 +42,15 @@ function App() {
 			<Router>
 				<ThemeProvider theme={theme}>
 					<Header />
-					<div className="container">
-						<Routes>
-							<Route path="" element={<Main />} />
-							<Route path="/signin" element={<SignIn />} />
-							<Route path="/signup" element={<SignUp />} />
-						</Routes>
-						<button onClick={handleClick}>Click me</button>
+					<div className="content">
+						<div className="container">
+							<Routes>
+								<Route path="" element={<Main />} />
+								<Route path="/signin" element={<SignIn />} />
+								<Route path="/signup" element={<SignUp />} />
+							</Routes>
+							<button onClick={handleClick}>Click me</button>
+						</div>
 					</div>
 				</ThemeProvider>
 			</Router>
