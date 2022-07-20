@@ -1,6 +1,6 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
 import React, { useState } from "react";
+import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import "./SignIn.scss";
 
@@ -49,12 +49,13 @@ function SignIn() {
 				[touchedName]: false,
 			});
 		};
-	const handleSubmit = () => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		console.log({ login: state.login, password: state.password });
 	};
 
 	return (
-		<div className="signIn">
+		<form className="signIn" onSubmit={handleSubmit}>
 			<TextField
 				margin="dense"
 				label="Логин"
@@ -105,11 +106,12 @@ function SignIn() {
 			<Button
 				disabled={!(state.login && state.password)}
 				variant="contained"
-				onClick={handleSubmit}
+				type="submit"
+				// onClick={handleSubmit}
 			>
 				Войти
 			</Button>
-		</div>
+		</form>
 	);
 }
 
