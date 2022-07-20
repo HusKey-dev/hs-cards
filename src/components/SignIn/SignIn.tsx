@@ -4,16 +4,17 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import "./SignIn.scss";
 
+interface State {
+	login: string;
+	loginIsTouched: boolean;
+	loginErr: boolean;
+	password: string;
+	passwordIsTouched: boolean;
+	passwordErr: boolean;
+	showPassword: boolean;
+}
+
 function SignIn() {
-	interface State {
-		login: string;
-		loginIsTouched: boolean;
-		loginErr: boolean;
-		password: string;
-		passwordIsTouched: boolean;
-		passwordErr: boolean;
-		showPassword: boolean;
-	}
 	const [state, setState] = useState<State>({
 		login: "",
 		loginIsTouched: false,
