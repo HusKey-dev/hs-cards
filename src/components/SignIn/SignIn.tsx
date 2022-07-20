@@ -78,9 +78,9 @@ function SignIn() {
 				label="Пароль"
 				value={state.password}
 				type={state.showPassword ? "text" : "password"}
-				error={!(state.password || !state.loginIsTouched)}
+				error={!(state.password || !state.passwordIsTouched)}
 				helperText={
-					!(state.password || !state.loginIsTouched)
+					!(state.password || !state.passwordIsTouched)
 						? "Обязательное поле"
 						: ""
 				}
