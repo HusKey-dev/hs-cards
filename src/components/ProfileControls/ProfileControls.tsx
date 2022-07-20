@@ -1,12 +1,16 @@
+import { Link } from "react-router-dom";
 import { Button, ButtonGroup } from "@mui/material";
-import React from "react";
 
 const ProfileControls = () => {
 	return (
 		<div>
 			<ButtonGroup variant="contained">
-				<Button>Вход</Button>
-				<Button>Регистрация</Button>
+				<Button component={Link} to="/signin">
+					Вход
+				</Button>
+				<Button component={Link} to="/signup">
+					Регистрация
+				</Button>
 			</ButtonGroup>
 		</div>
 	);

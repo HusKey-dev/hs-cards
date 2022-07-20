@@ -3,7 +3,7 @@ import SearchPanel from "../SearchPanel/SearchPanel";
 
 function Main() {
 	return (
-		<div className="container">
+		<div className="padding-1">
 			<p>
 				Lorem ipsum dolor sit amet consectetur adipisicing elit.
 				Laboriosam perspiciatis, saepe pariatur doloremque est molestias
@@ -11,6 +11,7 @@ function Main() {
 				harum autem? Delectus assumenda aspernatur, iste quos placeat
 				fugiat nihil laboriosam eaque molestiae temporibus sit error!
 			</p>
+			<br />
 			<SearchPanel />
 		</div>
 	);
