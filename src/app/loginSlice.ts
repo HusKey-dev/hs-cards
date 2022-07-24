@@ -20,7 +20,7 @@ export interface LoginState {
     userName: string,
     err: {
         loginErr: boolean,
-        passwordError: boolean,
+        passwordErr: boolean,
         networkErr: boolean
     }
 }
@@ -30,7 +30,7 @@ const initialState: LoginState = {
     userName: '',
     err: {
         loginErr: false,
-        passwordError: false,
+        passwordErr: false,
         networkErr: false
     }
 }
@@ -58,7 +58,7 @@ const loginSlice = createSlice({
                 state.err.loginErr = true;
             } else if (action.payload === 'Неверный пароль') {
                 state = initialState;
-                state.err.passwordError = true;
+                state.err.passwordErr = true;
             } else {
                 state = initialState;
                 state.err.networkErr = true
