@@ -35,15 +35,17 @@ function SignIn(props: PropsFromRedux) {
 
 	const getErrMessage = (prop: "login" | "password"): string => {
 		if (state[`${prop}Focus`]) {
+			// when we focus input, it will not show errors
 			return "";
 		} else if (!state[prop] && state[`${prop}IsTouched`]) {
-			console.log(state[prop]);
+			// when we are leaving input with empty value
 			return "Обязательное поле";
 		} else if (
 			prop === "login" &&
 			!state[`${prop}IsTouched`] &&
 			props.err[`${prop}Err`]
 		) {
+			// only showing error before we touch it to change
 			return `Неверное имя пользователя`;
 		} else if (
 			prop === "password" &&
@@ -93,6 +95,7 @@ function SignIn(props: PropsFromRedux) {
 		};
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		// changing state to make fields ready to show erorrs from api
 		setState({ ...state, passwordIsTouched: false, loginIsTouched: false });
 		props.logIn({ login: state.login, password: state.password });
 		console.log({ login: state.login, password: state.password });
