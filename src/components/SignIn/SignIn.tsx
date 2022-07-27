@@ -5,10 +5,11 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { logIn, logOut } from "../../app/loginSlice";
 import { RootState } from "../../app/store";
+import { createErrMessage } from "./createErrMessage";
 
 import "./SignIn.scss";
 
-interface State {
+export interface State {
 	login: string;
 	loginIsTouched: boolean;
 	loginFocus: boolean;
@@ -33,30 +34,8 @@ function SignIn(props: PropsFromRedux) {
 		props.logOut();
 	}, []);
 
-	const getErrMessage = (prop: "login" | "password"): string => {
-		if (state[`${prop}Focus`]) {
-			// when we focus input, it will not show errors
-			return "";
-		} else if (!state[prop] && state[`${prop}IsTouched`]) {
-			// when we are leaving input with empty value
-			return "Обязательное поле";
-		} else if (
-			prop === "login" &&
-			!state[`${prop}IsTouched`] &&
-			props.err[`${prop}Err`]
-		) {
-			// only showing error before we touch it to change
-			return `Неверное имя пользователя`;
-		} else if (
-			prop === "password" &&
-			!state[`${prop}IsTouched`] &&
-			props.err[`${prop}Err`]
-		) {
-			return "Неверный пароль";
-		} else {
-			return "";
-		}
-	};
+	const getErrMessage = (prop: "login" | "password"): string =>
+		createErrMessage(prop, state, props);
 
 	const handlePasswordIconClick = () => {
 		setState({ ...state, showPassword: !state.showPassword });
@@ -161,6 +140,8 @@ function SignIn(props: PropsFromRedux) {
 const mapStateToProps = (state: RootState) => {
 	return state.login;
 };
+
+export type ComponentProps = ReturnType<typeof mapStateToProps>;
 
 const connector = connect(mapStateToProps, { logIn, logOut });
 type PropsFromRedux = ConnectedProps<typeof connector>;
