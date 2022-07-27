@@ -37,7 +37,8 @@ const loginSlice = createSlice({
 	initialState,
 	reducers: {
 		logOut: (state) => {
-			state = initialState;
+			state = { ...initialState };
+			return state;
 		},
 	},
 	extraReducers: (builder) => {
@@ -63,7 +64,6 @@ const loginSlice = createSlice({
 			state.err = { ...initialState.err };
 		});
 		builder.addCase(createUser.fulfilled, (state, action) => {
-			state.isLoggedIn = true;
 			state.userName = action.payload;
 		});
 		builder.addCase(createUser.rejected, (state, action) => {
