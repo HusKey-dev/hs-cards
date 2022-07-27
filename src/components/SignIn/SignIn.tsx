@@ -31,6 +31,7 @@ function SignIn(props: PropsFromRedux) {
 	});
 
 	useEffect(() => {
+		console.log("sign in logout");
 		props.logOut();
 	}, []);
 
@@ -84,7 +85,7 @@ function SignIn(props: PropsFromRedux) {
 		<form className="signIn" onSubmit={handleSubmit}>
 			<TextField
 				margin="dense"
-				label="Логин"
+				label="Имя пользователя"
 				value={state.login}
 				error={!!getErrMessage("login")}
 				helperText={getErrMessage("login")}
@@ -125,7 +126,7 @@ function SignIn(props: PropsFromRedux) {
 			<br />
 			<Button
 				disabled={
-					(!state.login && !state.password) ||
+					!(state.login && state.password) ||
 					!!(getErrMessage("login") || getErrMessage("password"))
 				}
 				variant="contained"
