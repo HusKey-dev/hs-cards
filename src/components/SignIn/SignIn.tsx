@@ -1,38 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
+import { logIn, logOut } from "../../app/loginSlice";
+import { RootState } from "../../app/store";
+import { createErrMessage } from "./createErrMessage";
+
 import "./SignIn.scss";
 
-interface State {
+export interface State {
 	login: string;
 	loginIsTouched: boolean;
-	loginErr: boolean;
+	loginFocus: boolean;
 	password: string;
 	passwordIsTouched: boolean;
-	passwordErr: boolean;
+	passwordFocus: boolean;
 	showPassword: boolean;
 }
 
-function SignIn() {
+function SignIn(props: PropsFromRedux) {
 	const [state, setState] = useState<State>({
 		login: "",
 		loginIsTouched: false,
-		loginErr: false,
+		loginFocus: false,
 		password: "",
 		passwordIsTouched: false,
-		passwordErr: false,
+		passwordFocus: false,
 		showPassword: false,
 	});
+
+	useEffect(() => {
+		props.logOut();
+	}, []);
+
+	const getErrMessage = (prop: "login" | "password"): string =>
+		createErrMessage(prop, state, props);
 
 	const handlePasswordIconClick = () => {
 		setState({ ...state, showPassword: !state.showPassword });
 	};
+	const handleInputFocus =
+		(prop: "login" | "password") =>
+		(e: React.FocusEvent<HTMLInputElement>) => {
+			setState({ ...state, [`${prop}Focus`]: true });
+		};
 	const handleInputBlur =
 		(prop: "login" | "password") =>
 		(e: React.FocusEvent<HTMLInputElement>) => {
+			setState({ ...state, [`${prop}Focus`]: false });
 			if (!state[`${prop}IsTouched`]) {
-				setState({ ...state, [`${prop}IsTouched`]: true });
+				setState({
+					...state,
+					[`${prop}IsTouched`]: true,
+					[`${prop}Focus`]: false,
+				});
 			}
 		};
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -52,6 +74,9 @@ function SignIn() {
 		};
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		// changing state to make fields ready to show erorrs from api
+		setState({ ...state, passwordIsTouched: false, loginIsTouched: false });
+		props.logIn({ login: state.login, password: state.password });
 		console.log({ login: state.login, password: state.password });
 	};
 
@@ -61,14 +86,11 @@ function SignIn() {
 				margin="dense"
 				label="Логин"
 				value={state.login}
-				error={!(state.login || !state.loginIsTouched)}
-				helperText={
-					!(state.login || !state.loginIsTouched)
-						? "Обязательное поле"
-						: ""
-				}
+				error={!!getErrMessage("login")}
+				helperText={getErrMessage("login")}
 				onChange={handleChange("login")}
 				onBlur={handleInputBlur("login")}
+				onFocus={handleInputFocus("login")}
 				onKeyDown={handleKeyDown}
 				fullWidth
 			/>
@@ -78,14 +100,11 @@ function SignIn() {
 				label="Пароль"
 				value={state.password}
 				type={state.showPassword ? "text" : "password"}
-				error={!(state.password || !state.passwordIsTouched)}
-				helperText={
-					!(state.password || !state.passwordIsTouched)
-						? "Обязательное поле"
-						: ""
-				}
+				error={!!getErrMessage("password")}
+				helperText={getErrMessage("password")}
 				onChange={handleChange("password")}
 				onKeyDown={handleKeyDown}
+				onFocus={handleInputFocus("password")}
 				onBlur={handleInputBlur("password")}
 				fullWidth
 				InputProps={{
@@ -105,10 +124,12 @@ function SignIn() {
 			<br />
 			<br />
 			<Button
-				disabled={!(state.login && state.password)}
+				disabled={
+					(!state.login && !state.password) ||
+					!!(getErrMessage("login") || getErrMessage("password"))
+				}
 				variant="contained"
 				type="submit"
-				// onClick={handleSubmit}
 			>
 				Войти
 			</Button>
@@ -116,4 +137,13 @@ function SignIn() {
 	);
 }
 
-export default SignIn;
+const mapStateToProps = (state: RootState) => {
+	return state.login;
+};
+
+export type ComponentProps = ReturnType<typeof mapStateToProps>;
+
+const connector = connect(mapStateToProps, { logIn, logOut });
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(SignIn);
