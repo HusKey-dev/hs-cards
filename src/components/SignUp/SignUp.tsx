@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -38,10 +39,16 @@ function SignUp(props: PropsFromRedux) {
 		showPassword: false,
 	});
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		// Clearing store from any information about signIn attempts since they share the same store slice
 		props.logOut();
 	}, []);
+
+	useEffect(() => {
+		if (props.isLoggedIn) navigate("/");
+	}, [props.isLoggedIn]);
 
 	const getErrMessage = (prop: Prop): string =>
 		createErrMessage(prop, state, props);
@@ -183,12 +190,12 @@ function SignUp(props: PropsFromRedux) {
 							color="secondary"
 							variant="contained"
 							size="large"
-							onClick={() =>
+							onClick={() => {
 								props.logIn({
 									login: props.userName,
 									password: state.password1,
-								})
-							}
+								});
+							}}
 						>
 							Войти
 						</Button>
