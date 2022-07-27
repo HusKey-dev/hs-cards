@@ -31,7 +31,7 @@ function SignIn(props: PropsFromRedux) {
 	});
 
 	useEffect(() => {
-		console.log("sign in logout");
+		// Clearing store from any information about signUp attempts since they share the same store slice
 		props.logOut();
 	}, []);
 
