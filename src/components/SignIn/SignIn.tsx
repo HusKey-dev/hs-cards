@@ -3,6 +3,8 @@ import { connect, ConnectedProps } from "react-redux";
 import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
+import { useNavigate } from "react-router-dom";
+
 import { logIn, logOut } from "../../app/loginSlice";
 import { RootState } from "../../app/store";
 import { createErrMessage } from "./createErrMessage";
@@ -30,10 +32,16 @@ function SignIn(props: PropsFromRedux) {
 		showPassword: false,
 	});
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		// Clearing store from any information about signUp attempts since they share the same store slice
 		props.logOut();
 	}, []);
+
+	useEffect(() => {
+		if (props.isLoggedIn) navigate("/");
+	}, [props.isLoggedIn]);
 
 	const getErrMessage = (prop: "login" | "password"): string =>
 		createErrMessage(prop, state, props);
