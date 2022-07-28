@@ -23,7 +23,7 @@ const ProfileControls = (props: PropsFromRedux) => {
 			) : (
 				<>
 					<Avatar>{props.userName.slice(0, 2)}</Avatar>
-					<div>{props.userName}</div>
+					<div className="user-name">{props.userName}</div>
 					<ButtonGroup variant="contained">
 						<Button component={Link} to="/favourites">
 							Избранное
