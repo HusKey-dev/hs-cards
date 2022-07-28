@@ -10,6 +10,7 @@ import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import Favourites from "./components/Favourites/Favourites";
 import History from "./components/History/History";
+import Guard from "./components/Guard";
 
 const theme = createTheme({
 	palette: {
@@ -52,9 +53,20 @@ function App() {
 								<Route path="/signup" element={<SignUp />} />
 								<Route
 									path="/favourites"
-									element={<Favourites />}
+									element={
+										<Guard>
+											<Favourites />
+										</Guard>
+									}
 								/>
-								<Route path="/history" element={<History />} />
+								<Route
+									path="/history"
+									element={
+										<Guard>
+											<History />
+										</Guard>
+									}
+								/>
 							</Routes>
 							<button onClick={handleClick}>Click me</button>
 						</div>
