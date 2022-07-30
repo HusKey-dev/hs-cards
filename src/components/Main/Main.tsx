@@ -1,7 +1,23 @@
+import {
+	Button,
+	Select,
+	InputLabel,
+	MenuItem,
+	FormControl,
+} from "@mui/material";
 import React from "react";
+import { hsApi } from "../../app/hsAPI";
+import CustomSelect from "../CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
 
 function Main() {
+	const cardName = "Порождение тьмы"; //temporary hardcoded value
+	const data = hsApi.useFetchCardQuery(cardName);
+	const { data: info, isSuccess: infoStatus } = hsApi.useFetchInfoQuery("");
+	const { data: infoRus, isSuccess: infoStatusRus } =
+		hsApi.useFetchInfoQuery("ruRU");
+	const { data: searchResult, isSuccess } = hsApi.useSearchCardQuery("порож");
+
 	return (
 		<div className="padding-1">
 			<p>
@@ -12,7 +28,48 @@ function Main() {
 				fugiat nihil laboriosam eaque molestiae temporibus sit error!
 			</p>
 			<br />
+			<CustomSelect
+				value="Все"
+				id="class"
+				label="Класс"
+				requiredOption="Все"
+				options={infoStatusRus ? infoRus.classes : []}
+			/>
+			<CustomSelect
+				value="Все"
+				id="qualities"
+				label="Редкость"
+				requiredOption="Все"
+				options={infoStatusRus ? infoRus.qualities : []}
+			/>
+			<CustomSelect
+				value="Все"
+				id="type"
+				label="Тип карты"
+				requiredOption="Все"
+				options={infoStatus ? infoRus.types : []}
+			/>
+
 			<SearchPanel />
+
+			{/* This button is temporary and will be removed */}
+			<Button
+				onClick={() => {
+					console.log(data);
+					console.log(info);
+					console.log(infoRus);
+					console.log(searchResult);
+				}}
+			>
+				Нажми на меня
+			</Button>
+			{isSuccess
+				? searchResult?.map((el) => (
+						<div>
+							<img src={el.img} style={{ height: "200px" }} />
+						</div>
+				  ))
+				: null}
 		</div>
 	);
 }
