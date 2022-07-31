@@ -1,4 +1,4 @@
-import { TextField, Button, styled } from "@mui/material";
+import { Autocomplete, TextField, Button, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,31 +11,36 @@ const StyledTextField = styled(TextField)(() => ({
 
 interface SearchPanelProps {
 	value: string;
-	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	onChange?: (event: React.SyntheticEvent, newValue: string) => void;
+	suggests?: Array<string>;
 }
 
-function SearchPanel({ value, onChange }: SearchPanelProps) {
+function SearchPanel({ value, suggests, onChange }: SearchPanelProps) {
 	const inputEl = useRef<any>(null);
 	const [height, setHeight] = useState<string>("0px");
 
-	useEffect(() => {
-		if (height === "0px") {
-			setHeight(inputEl.current?.clientHeight + "px");
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (height === "0px") {
+	// 		setHeight(inputEl.current?.clientHeight + "px");
+	// 	}
+	// }, []);
 
 	return (
 		<div>
-			<StyledTextField
-				label="Поиск"
-				variant="outlined"
-				inputRef={inputEl}
+			<Autocomplete
+				blurOnSelect={true}
+				freeSolo
 				sx={{
 					width: "400px",
 				}}
-				value={value}
-				onChange={onChange}
+				options={(value.length > 1 && suggests) || []}
+				inputValue={value}
+				onInputChange={onChange}
+				renderInput={(params) => (
+					<TextField {...params} label="Поиск" />
+				)}
 			/>
+
 			<Button
 				variant="contained"
 				sx={{

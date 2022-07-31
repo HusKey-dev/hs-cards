@@ -8,7 +8,7 @@ import SearchResults from "../SearchResults";
 
 function Main() {
 	const [input, setInput] = useState("");
-	const debouncedInput = useRef("");
+	const [debouncedInput, setDebouncedInput] = useState("");
 
 	const cardName = "Порождение тьмы"; //temporary hardcoded value
 	const { data } = hsApi.useFetchCardQuery(cardName);
@@ -16,9 +16,9 @@ function Main() {
 	const { data: infoRus, isSuccess: infoStatusRus } =
 		hsApi.useFetchInfoQuery("ruRU");
 	const { data: cardResults, isSuccess } = hsApi.useSearchCardQuery(
-		debouncedInput.current,
+		debouncedInput,
 		{
-			skip: !debouncedInput.current,
+			skip: !(debouncedInput.length > 1),
 		}
 	);
 
@@ -27,14 +27,14 @@ function Main() {
 		// will not search if query is too short or empty
 		if (input.length > 1) {
 			const timeout = setTimeout(() => {
-				debouncedInput.current = input;
+				setDebouncedInput(input);
 			}, 1000);
 			return () => clearTimeout(timeout);
 		}
 	}, [input]);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setInput(e.target.value);
+	const handleInputChange = (e: React.SyntheticEvent, newValue: string) => {
+		setInput(newValue);
 	};
 
 	return (
@@ -69,7 +69,17 @@ function Main() {
 				options={infoStatus ? infoRus?.types : []}
 			/>
 
-			<SearchPanel value={input} onChange={handleInputChange} />
+			<SearchPanel
+				value={input}
+				onChange={handleInputChange}
+				suggests={
+					cardResults &&
+					cardResults
+						.map((card) => card.name)
+						.filter((el, i, arr) => i === arr.lastIndexOf(el))
+						.slice(-5)
+				}
+			/>
 
 			{/* This button is temporary and will be removed */}
 			<Button
