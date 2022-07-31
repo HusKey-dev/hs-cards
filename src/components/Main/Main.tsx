@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@mui/material";
 
 import { hsApi } from "../../app/hsAPI";
@@ -8,7 +8,7 @@ import SearchResults from "../SearchResults";
 
 function Main() {
 	const [input, setInput] = useState("");
-	const [debouncedInput, setDebouncedIinput] = useState("");
+	const debouncedInput = useRef("");
 
 	const cardName = "Порождение тьмы"; //temporary hardcoded value
 	const { data } = hsApi.useFetchCardQuery(cardName);
@@ -16,9 +16,9 @@ function Main() {
 	const { data: infoRus, isSuccess: infoStatusRus } =
 		hsApi.useFetchInfoQuery("ruRU");
 	const { data: cardResults, isSuccess } = hsApi.useSearchCardQuery(
-		debouncedInput,
+		debouncedInput.current,
 		{
-			skip: !debouncedInput,
+			skip: !debouncedInput.current,
 		}
 	);
 
@@ -27,7 +27,7 @@ function Main() {
 		// will not search if query is too short or empty
 		if (input.length > 1) {
 			const timeout = setTimeout(() => {
-				setDebouncedIinput(input);
+				debouncedInput.current = input;
 			}, 1000);
 			return () => clearTimeout(timeout);
 		}
