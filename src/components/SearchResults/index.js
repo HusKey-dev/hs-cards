@@ -2,13 +2,20 @@
 
 import "./SearchResults.scss";
 
-function SearchResults({ results }) {
+function SearchResults({ results, filters }) {
+	let filteredResults = [...results];
+	for (let filter in filters) {
+		filteredResults = filteredResults.filter(
+			(el) => filters[filter] === "Все" || filters[filter] === el[filter]
+		);
+	}
+
 	return (
 		<div className="searchResults">
 			{!results.length ? (
 				<p>Нет результатов</p>
 			) : (
-				results.map((card) => (
+				filteredResults.map((card) => (
 					<div className="result" key={card.cardId}>
 						<img
 							src={card.img}

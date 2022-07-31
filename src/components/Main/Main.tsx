@@ -6,9 +6,20 @@ import CustomSelect from "../CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import SearchResults from "../SearchResults";
 
+interface Filters {
+	playerClass: string;
+	rarity: string;
+	type: string;
+}
+
 function Main() {
 	const [input, setInput] = useState("");
 	const [debouncedInput, setDebouncedInput] = useState("");
+	const [filters, setFilters] = useState<Filters>({
+		playerClass: "Все",
+		rarity: "Все",
+		type: "Все",
+	});
 
 	const cardName = "Порождение тьмы"; //temporary hardcoded value
 	const { data } = hsApi.useFetchCardQuery(cardName);
@@ -21,6 +32,15 @@ function Main() {
 			skip: !(debouncedInput.length > 1),
 		}
 	);
+
+	const translateFilter = (filter: string): string => {
+		if (!info || !infoRus) return "Все";
+		for (let property in infoRus) {
+			let i = infoRus[property].indexOf(filter);
+			if (i > -1) return info[property][i];
+		}
+		return "Все";
+	};
 
 	// debouncing search query
 	useEffect(() => {
@@ -37,6 +57,11 @@ function Main() {
 		setInput(newValue);
 	};
 
+	const handleSelect =
+		(prop: "playerClass" | "rarity" | "type") => (e: any) => {
+			setFilters({ ...filters, [prop]: e.target.value });
+		};
+
 	return (
 		<div className="padding-1">
 			<p>
@@ -48,25 +73,28 @@ function Main() {
 			</p>
 			<br />
 			<CustomSelect
-				value="Все"
+				value={filters.playerClass || "Все"}
 				id="class"
 				label="Класс"
 				requiredOption="Все"
 				options={infoStatusRus ? infoRus?.classes : []}
+				onChange={handleSelect("playerClass")}
 			/>
 			<CustomSelect
-				value="Все"
-				id="qualities"
+				value={filters.rarity || "Все"}
+				id="rarity"
 				label="Редкость"
 				requiredOption="Все"
 				options={infoStatusRus ? infoRus?.qualities : []}
+				onChange={handleSelect("rarity")}
 			/>
 			<CustomSelect
-				value="Все"
+				value={filters.type || "все"}
 				id="type"
 				label="Тип карты"
 				requiredOption="Все"
 				options={infoStatus ? infoRus?.types : []}
+				onChange={handleSelect("type")}
 			/>
 
 			<SearchPanel
@@ -93,6 +121,11 @@ function Main() {
 				Нажми на меня
 			</Button>
 			<SearchResults
+				filters={{
+					playerClass: translateFilter(filters.playerClass),
+					rarity: translateFilter(filters.rarity),
+					type: translateFilter(filters.type),
+				}}
 				results={cardResults && cardResults.length ? cardResults : []}
 			/>
 		</div>
