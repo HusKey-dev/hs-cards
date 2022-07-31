@@ -1,22 +1,41 @@
-import {
-	Button,
-	Select,
-	InputLabel,
-	MenuItem,
-	FormControl,
-} from "@mui/material";
-import React from "react";
+import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
+
 import { hsApi } from "../../app/hsAPI";
 import CustomSelect from "../CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
+import SearchResults from "../SearchResults";
 
 function Main() {
+	const [input, setInput] = useState("");
+	const [debouncedInput, setDebouncedIinput] = useState("");
+
 	const cardName = "Порождение тьмы"; //temporary hardcoded value
-	const data = hsApi.useFetchCardQuery(cardName);
+	const { data } = hsApi.useFetchCardQuery(cardName);
 	const { data: info, isSuccess: infoStatus } = hsApi.useFetchInfoQuery("");
 	const { data: infoRus, isSuccess: infoStatusRus } =
 		hsApi.useFetchInfoQuery("ruRU");
-	const { data: searchResult, isSuccess } = hsApi.useSearchCardQuery("порож");
+	const { data: cardResults, isSuccess } = hsApi.useSearchCardQuery(
+		debouncedInput,
+		{
+			skip: !debouncedInput,
+		}
+	);
+
+	// debouncing search query
+	useEffect(() => {
+		// will not search if query is too short or empty
+		if (input.length > 1) {
+			const timeout = setTimeout(() => {
+				setDebouncedIinput(input);
+			}, 1000);
+			return () => clearTimeout(timeout);
+		}
+	}, [input]);
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInput(e.target.value);
+	};
 
 	return (
 		<div className="padding-1">
@@ -33,24 +52,24 @@ function Main() {
 				id="class"
 				label="Класс"
 				requiredOption="Все"
-				options={infoStatusRus ? infoRus.classes : []}
+				options={infoStatusRus ? infoRus?.classes : []}
 			/>
 			<CustomSelect
 				value="Все"
 				id="qualities"
 				label="Редкость"
 				requiredOption="Все"
-				options={infoStatusRus ? infoRus.qualities : []}
+				options={infoStatusRus ? infoRus?.qualities : []}
 			/>
 			<CustomSelect
 				value="Все"
 				id="type"
 				label="Тип карты"
 				requiredOption="Все"
-				options={infoStatus ? infoRus.types : []}
+				options={infoStatus ? infoRus?.types : []}
 			/>
 
-			<SearchPanel />
+			<SearchPanel value={input} onChange={handleInputChange} />
 
 			{/* This button is temporary and will be removed */}
 			<Button
@@ -58,18 +77,14 @@ function Main() {
 					console.log(data);
 					console.log(info);
 					console.log(infoRus);
-					console.log(searchResult);
+					console.log(cardResults);
 				}}
 			>
 				Нажми на меня
 			</Button>
-			{isSuccess
-				? searchResult?.map((el) => (
-						<div>
-							<img src={el.img} style={{ height: "200px" }} />
-						</div>
-				  ))
-				: null}
+			<SearchResults
+				results={cardResults && cardResults.length ? cardResults : []}
+			/>
 		</div>
 	);
 }

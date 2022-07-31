@@ -1,5 +1,7 @@
 import { Select, InputLabel, MenuItem, FormControl } from "@mui/material";
 
+// propTypes will be implemented here
+
 function CustomSelect({ value, label, id, requiredOption, options = [] }) {
 	if (requiredOption) options = [requiredOption, ...options];
 	return (

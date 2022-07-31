@@ -9,7 +9,12 @@ const StyledTextField = styled(TextField)(() => ({
 	},
 }));
 
-function SearchPanel() {
+interface SearchPanelProps {
+	value: string;
+	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function SearchPanel({ value, onChange }: SearchPanelProps) {
 	const inputEl = useRef<any>(null);
 	const [height, setHeight] = useState<string>("0px");
 
@@ -28,18 +33,16 @@ function SearchPanel() {
 				sx={{
 					width: "400px",
 				}}
-				// inputProps={{ classes: { input: { height: 40 } } }}
+				value={value}
+				onChange={onChange}
 			/>
 			<Button
 				variant="contained"
-				sx={(() => {
-					console.log(height);
-					return {
-						height,
-						borderTopLeftRadius: "0px",
-						borderBottomLeftRadius: "0px",
-					};
-				})()}
+				sx={{
+					height,
+					borderTopLeftRadius: "0px",
+					borderBottomLeftRadius: "0px",
+				}}
 			>
 				<SearchIcon />
 			</Button>

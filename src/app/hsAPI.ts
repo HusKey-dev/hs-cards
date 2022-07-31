@@ -1,8 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-interface SingleCardResponse {
+export interface SingleCardResponse {
 	cardId: string;
 	name: string;
 	img: string;
+	[propName: string]: any;
+}
+
+interface InfoResponse {
 	[propName: string]: any;
 }
 
@@ -27,7 +31,7 @@ export const hsApi = createApi({
 		},
 	}),
 	endpoints: (builder) => ({
-		fetchCard: builder.query<[SingleCardResponse], string>({
+		fetchCard: builder.query<SingleCardResponse[], string>({
 			query: (cardName) => ({
 				url: `/cards/${cardName}`,
 				method: "GET",
@@ -37,13 +41,18 @@ export const hsApi = createApi({
 				},
 			}),
 		}),
-		fetchInfo: builder.query({
-			query: (lang: string) => ({
+		fetchInfo: builder.query<InfoResponse, string>({
+			query: (lang) => ({
 				url: `/info`,
 				method: "GET",
 				params: {
 					locale: lang || "enUS",
 				},
+			}),
+			transformResponse: (res: InfoResponse) => ({
+				classes: res.classes,
+				qualities: res.qualities,
+				types: res.types,
 			}),
 		}),
 		searchCard: builder.query({
@@ -54,7 +63,8 @@ export const hsApi = createApi({
 					locale: "ruRU",
 				},
 			}),
-			transformResponse: (response: Array<SingleCardResponse>) => {
+			transformResponse: (response: Array<SingleCardResponse> | []) => {
+				if (!response.length) return [];
 				return response
 					.filter((el) => el.img && el.playerClass && el.rarity)
 					.map((el) => {

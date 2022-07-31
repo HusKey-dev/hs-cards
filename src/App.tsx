@@ -11,7 +11,6 @@ import SignUp from "./components/SignUp/SignUp";
 import Favourites from "./components/Favourites/Favourites";
 import History from "./components/History/History";
 import Guard from "./components/Guard";
-import { PanoramaSharp } from "@mui/icons-material";
 
 const theme = createTheme({
 	palette: {
@@ -35,7 +34,7 @@ function App() {
 			locale: "ruRU",
 		},
 		params: {
-			name: "король ан",
+			name: "корольfjfhg ан",
 			collectible: "1",
 			locale: "ruRU",
 		},
