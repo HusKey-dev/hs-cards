@@ -33,11 +33,20 @@ function App() {
 			"X-RapidAPI-Host": "omgvamp-hearthstone-v1.p.rapidapi.com",
 			locale: "ruRU",
 		},
-		params: { collectible: "1", locale: "ruRU" },
+		params: {
+			name: "корольfjfhg ан",
+			collectible: "1",
+			locale: "ruRU",
+		},
 	};
 	const handleClick = async () => {
-		let res = await axios.get(`${BASE_URL}/cards/EX1_572`, options);
+		let res = await axios.get(
+			`${BASE_URL}/cards/search/${options.params.name}`,
+			options
+		);
 		console.log(res);
+		// res = await axios.get(`${BASE_URL}/info`, options);
+		// console.log(res);
 	};
 
 	return (
