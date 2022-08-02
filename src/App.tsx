@@ -11,6 +11,7 @@ import SignUp from "./components/SignUp/SignUp";
 import Favourites from "./components/Favourites/Favourites";
 import History from "./components/History/History";
 import Guard from "./components/Guard";
+import SingleCard from "./components/SingleCard";
 
 const theme = createTheme({
 	palette: {
@@ -58,6 +59,10 @@ function App() {
 						<div className="container">
 							<Routes>
 								<Route path="/" element={<Main />} />
+								<Route
+									path="/card:cardId"
+									element={<SingleCard />}
+								/>
 								<Route path="/signin" element={<SignIn />} />
 								<Route path="/signup" element={<SignUp />} />
 								<Route

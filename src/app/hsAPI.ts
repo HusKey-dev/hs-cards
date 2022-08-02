@@ -31,15 +31,27 @@ export const hsApi = createApi({
 		},
 	}),
 	endpoints: (builder) => ({
-		fetchCard: builder.query<SingleCardResponse[], string>({
-			query: (cardName) => ({
-				url: `/cards/${cardName}`,
+		fetchCard: builder.query<SingleCardResponse, string>({
+			query: (cardNameOrId) => ({
+				url: `/cards/${cardNameOrId}`,
 				method: "GET",
 				params: {
 					collectible: 1,
 					locale: "ruRU",
 				},
 			}),
+			// transformResponse: (res: Array<SingleCardResponse>) => ({
+			// 	name: res[0].name,
+			// 	flavor: res[0].flafor,
+			// 	text: res[0].text,
+			// 	type: res[0].type,
+			// 	rarity: res[0].rarity,
+			// 	cost: res[0].cost,
+			// 	health: res[0].health,
+			// 	attack: res[0].attack,
+			// 	img: res[0].img,
+			// 	cardId: res[0].cardId,
+			// }),
 		}),
 		fetchInfo: builder.query<InfoResponse, string>({
 			query: (lang) => ({
