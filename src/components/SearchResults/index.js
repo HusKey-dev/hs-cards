@@ -18,7 +18,7 @@ function SearchResults({ results, filters }) {
 			) : (
 				filteredResults.map((card) => (
 					<Link
-						to={`./card${card.cardId}`}
+						to={`./card/${card.cardId}`}
 						className="result"
 						key={card.cardId}
 					>
