@@ -5,6 +5,7 @@ import { hsApi } from "../../app/hsAPI";
 import CustomSelect from "../CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import SearchResults from "../SearchResults";
+import SingleCard from "../SingleCard";
 
 interface Filters {
 	playerClass: string;
@@ -21,8 +22,6 @@ function Main() {
 		type: "Все",
 	});
 
-	const cardName = "Порождение тьмы"; //temporary hardcoded value
-	const { data } = hsApi.useFetchCardQuery(cardName);
 	const { data: info, isSuccess: infoStatus } = hsApi.useFetchInfoQuery("");
 	const { data: infoRus, isSuccess: infoStatusRus } =
 		hsApi.useFetchInfoQuery("ruRU");
@@ -112,7 +111,6 @@ function Main() {
 			{/* This button is temporary and will be removed */}
 			<Button
 				onClick={() => {
-					console.log(data);
 					console.log(info);
 					console.log(infoRus);
 					console.log(cardResults);

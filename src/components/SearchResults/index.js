@@ -1,5 +1,6 @@
 // Prop types will be implemented here
 
+import { Link } from "react-router-dom";
 import "./SearchResults.scss";
 
 function SearchResults({ results, filters }) {
@@ -16,14 +17,18 @@ function SearchResults({ results, filters }) {
 				<p>Нет результатов</p>
 			) : (
 				filteredResults.map((card) => (
-					<div className="result" key={card.cardId}>
+					<Link
+						to={`./card/${card.cardId}`}
+						className="result"
+						key={card.cardId}
+					>
 						<img
 							src={card.img}
 							style={{ height: "300px" }}
 							alt={card.name}
 						/>
 						<p>{card.name}</p>
-					</div>
+					</Link>
 				))
 			)}
 		</div>

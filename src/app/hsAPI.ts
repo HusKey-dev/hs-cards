@@ -31,15 +31,16 @@ export const hsApi = createApi({
 		},
 	}),
 	endpoints: (builder) => ({
-		fetchCard: builder.query<SingleCardResponse[], string>({
-			query: (cardName) => ({
-				url: `/cards/${cardName}`,
+		fetchCard: builder.query<SingleCardResponse, string>({
+			query: (cardNameOrId) => ({
+				url: `/cards/${cardNameOrId}`,
 				method: "GET",
 				params: {
 					collectible: 1,
 					locale: "ruRU",
 				},
 			}),
+			transformResponse: (res: Array<SingleCardResponse>) => res[0],
 		}),
 		fetchInfo: builder.query<InfoResponse, string>({
 			query: (lang) => ({

@@ -1,5 +1,10 @@
 import axios from "axios";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Navigate,
+	Route,
+	Routes,
+} from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Header from "./components/Header/Header";
@@ -11,6 +16,7 @@ import SignUp from "./components/SignUp/SignUp";
 import Favourites from "./components/Favourites/Favourites";
 import History from "./components/History/History";
 import Guard from "./components/Guard";
+import SingleCard from "./components/SingleCard";
 
 const theme = createTheme({
 	palette: {
@@ -58,6 +64,10 @@ function App() {
 						<div className="container">
 							<Routes>
 								<Route path="/" element={<Main />} />
+								<Route
+									path="/card/:cardId"
+									element={<SingleCard />}
+								/>
 								<Route path="/signin" element={<SignIn />} />
 								<Route path="/signup" element={<SignUp />} />
 								<Route
@@ -75,6 +85,10 @@ function App() {
 											<History />
 										</Guard>
 									}
+								/>
+								<Route
+									path="*"
+									element={<Navigate replace to="/" />}
 								/>
 							</Routes>
 							<button onClick={handleClick}>Click me</button>
