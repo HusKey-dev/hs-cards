@@ -1,5 +1,10 @@
 import axios from "axios";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Navigate,
+	Route,
+	Routes,
+} from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Header from "./components/Header/Header";
@@ -60,7 +65,7 @@ function App() {
 							<Routes>
 								<Route path="/" element={<Main />} />
 								<Route
-									path="/card:cardId"
+									path="/card/:cardId"
 									element={<SingleCard />}
 								/>
 								<Route path="/signin" element={<SignIn />} />
@@ -80,6 +85,10 @@ function App() {
 											<History />
 										</Guard>
 									}
+								/>
+								<Route
+									path="*"
+									element={<Navigate replace to="/" />}
 								/>
 							</Routes>
 							<button onClick={handleClick}>Click me</button>
