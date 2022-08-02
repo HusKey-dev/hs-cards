@@ -40,18 +40,7 @@ export const hsApi = createApi({
 					locale: "ruRU",
 				},
 			}),
-			// transformResponse: (res: Array<SingleCardResponse>) => ({
-			// 	name: res[0].name,
-			// 	flavor: res[0].flafor,
-			// 	text: res[0].text,
-			// 	type: res[0].type,
-			// 	rarity: res[0].rarity,
-			// 	cost: res[0].cost,
-			// 	health: res[0].health,
-			// 	attack: res[0].attack,
-			// 	img: res[0].img,
-			// 	cardId: res[0].cardId,
-			// }),
+			transformResponse: (res: Array<SingleCardResponse>) => res[0],
 		}),
 		fetchInfo: builder.query<InfoResponse, string>({
 			query: (lang) => ({

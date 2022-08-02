@@ -8,10 +8,9 @@ import "./SingleCard.scss";
 function SingleCard() {
 	const { isLoggedIn, userName } = useAppSelector((state) => state.login);
 	const { cardId } = useParams();
-	const { data, isSuccess } = hsApi.useFetchCardQuery(cardId || "", {
+	const { data: card, isSuccess } = hsApi.useFetchCardQuery(cardId || "", {
 		skip: !cardId,
 	});
-	const card = data && data[0];
 
 	if (isSuccess && card)
 		return (
