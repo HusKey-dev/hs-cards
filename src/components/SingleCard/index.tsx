@@ -42,7 +42,7 @@ function SingleCard() {
 			</div>
 		);
 
-	return <div>cardId</div>;
+	return <div>Загрузка...</div>;
 }
 
 export default SingleCard;
