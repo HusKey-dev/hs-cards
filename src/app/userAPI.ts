@@ -1,12 +1,9 @@
-import { Password } from "@mui/icons-material";
-import { json } from "stream/consumers";
-
 export interface User {
 	login: string;
 	password: string;
 }
 
-const delay: number = 500;
+export const delay: number = 500;
 
 export const userApi = {
 	get(user: User) {

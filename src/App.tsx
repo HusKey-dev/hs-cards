@@ -17,6 +17,7 @@ import Favourites from "./components/Favourites/Favourites";
 import History from "./components/History/History";
 import Guard from "./components/Guard";
 import SingleCard from "./components/SingleCard";
+import Auth from "./components/Auth";
 
 const theme = createTheme({
 	palette: {
@@ -91,9 +92,9 @@ function App() {
 									element={<Navigate replace to="/" />}
 								/>
 							</Routes>
-							<button onClick={handleClick}>Click me</button>
 						</div>
 					</div>
+					<Auth />
 				</ThemeProvider>
 			</Router>
 		</div>
