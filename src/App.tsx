@@ -66,6 +66,10 @@ function App() {
 							<Routes>
 								<Route path="/" element={<Main />} />
 								<Route
+									path="/search/:params"
+									element={<Main />}
+								/>
+								<Route
 									path="/card/:cardId"
 									element={<SingleCard />}
 								/>

@@ -6,6 +6,7 @@ import CustomSelect from "../CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import SearchResults from "../SearchResults";
 import SingleCard from "../SingleCard";
+import { useSearchParams } from "react-router-dom";
 
 interface Filters {
 	playerClass: string;
@@ -14,12 +15,13 @@ interface Filters {
 }
 
 function Main() {
-	const [input, setInput] = useState("");
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [input, setInput] = useState(searchParams.get("input") || "");
 	const [debouncedInput, setDebouncedInput] = useState("");
 	const [filters, setFilters] = useState<Filters>({
-		playerClass: "Все",
-		rarity: "Все",
-		type: "Все",
+		playerClass: searchParams.get("class") || "Все",
+		rarity: searchParams.get("rarity") || "Все",
+		type: searchParams.get("type") || "Все",
 	});
 
 	const { data: info, isSuccess: infoStatus } = hsApi.useFetchInfoQuery("");
@@ -41,11 +43,43 @@ function Main() {
 		return "Все";
 	};
 
+	// useEffect(() => {
+	// 	if (searchParams) {
+	// 		setFilters({
+	// 			playerClass: searchParams.get("class") || "Все",
+	// 			rarity: searchParams.get("rarity") || "Все",
+	// 			type: searchParams.get("type") || "Все",
+	// 		});
+	// 		setInput(searchParams.get("input") || "");
+	// 	}
+	// }, []);
+
+	const paramsInput = searchParams.get("input");
+	if (debouncedInput) {
+		if (!paramsInput) {
+			setInput("");
+			setDebouncedInput("");
+		} else if (paramsInput !== debouncedInput) {
+			setInput(paramsInput);
+			setDebouncedInput(paramsInput);
+		}
+	}
+	useEffect(() => {
+		console.log("рендер");
+		console.log();
+	}, []);
+
 	// debouncing search query
 	useEffect(() => {
 		// will not search if query is too short or empty
 		if (input.length > 1) {
 			const timeout = setTimeout(() => {
+				setSearchParams({
+					class: filters.playerClass,
+					rarity: filters.rarity,
+					type: filters.type,
+					input,
+				});
 				setDebouncedInput(input);
 			}, 1000);
 			return () => clearTimeout(timeout);
