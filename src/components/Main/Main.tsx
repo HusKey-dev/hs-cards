@@ -18,10 +18,15 @@ function Main() {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [input, setInput] = useState(searchParams.get("input") || "");
 	const [debouncedInput, setDebouncedInput] = useState("");
+	const paramsInput = searchParams.get("input");
+	const paramsClass = searchParams.get("class");
+	const paramsRarity = searchParams.get("rarity");
+	const paramsType = searchParams.get("type");
+
 	const [filters, setFilters] = useState<Filters>({
-		playerClass: searchParams.get("class") || "Все",
-		rarity: searchParams.get("rarity") || "Все",
-		type: searchParams.get("type") || "Все",
+		playerClass: paramsClass || "Все",
+		rarity: paramsRarity || "Все",
+		type: paramsType || "Все",
 	});
 
 	const { data: info, isSuccess: infoStatus } = hsApi.useFetchInfoQuery("");
@@ -54,16 +59,19 @@ function Main() {
 	// 	}
 	// }, []);
 
-	const paramsInput = searchParams.get("input");
+	// If we navigate back through history, component will update its state
 	if (debouncedInput) {
-		if (!paramsInput) {
-			setInput("");
-			setDebouncedInput("");
-		} else if (paramsInput !== debouncedInput) {
-			setInput(paramsInput);
-			setDebouncedInput(paramsInput);
+		if (paramsInput !== debouncedInput) {
+			setInput(paramsInput || "");
+			setDebouncedInput(paramsInput || "");
+			setFilters({
+				playerClass: paramsClass || "Все",
+				rarity: paramsRarity || "Все",
+				type: paramsType || "Все",
+			});
 		}
 	}
+
 	useEffect(() => {
 		console.log("рендер");
 		console.log();
