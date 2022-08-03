@@ -40,6 +40,14 @@ const loginSlice = createSlice({
 			state = { ...initialState };
 			return state;
 		},
+		forceLogIn: (state, action) => {
+			state = {
+				...initialState,
+				isLoggedIn: true,
+				userName: action.payload,
+			};
+			return state;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(logIn.fulfilled, (state, action) => {
@@ -76,5 +84,5 @@ const loginSlice = createSlice({
 	},
 });
 
-export const { logOut } = loginSlice.actions;
+export const { logOut, forceLogIn } = loginSlice.actions;
 export default loginSlice.reducer;

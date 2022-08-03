@@ -1,16 +1,30 @@
 import { Button } from "@mui/material";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { hsApi } from "../../app/hsAPI";
+import { putFavourite } from "../../app/favouritesSlice";
 
 import "./SingleCard.scss";
 
 function SingleCard() {
+	const dispatch = useAppDispatch();
 	const { isLoggedIn, userName } = useAppSelector((state) => state.login);
+	const { data: favourites, error } = useAppSelector(
+		(state) => state.favourites
+	);
+
 	const { cardId } = useParams();
 	const { data: card, isSuccess } = hsApi.useFetchCardQuery(cardId || "", {
 		skip: !cardId,
 	});
+
+	const showButton =
+		isLoggedIn && cardId && !favourites.some((el) => el.id === cardId);
+
+	useEffect(() => {
+		console.log(favourites);
+	}, [favourites.length]);
 
 	if (isSuccess && card)
 		return (
@@ -31,8 +45,19 @@ function SingleCard() {
 					{card.faction ? <p>Фракция: {card.faction}</p> : null}
 
 					<div className="button-container">
-						{isLoggedIn ? (
-							<Button variant="contained">
+						{showButton ? (
+							<Button
+								variant="contained"
+								onClick={() =>
+									dispatch(
+										putFavourite({
+											id: cardId,
+											cardName: card.name,
+											img: card.img,
+										})
+									)
+								}
+							>
 								Добавить в избранное
 							</Button>
 						) : null}

@@ -8,11 +8,13 @@ import {
 import counterReducer from "../features/counter/counterSlice";
 import { hsApi } from "./hsAPI";
 import loginReducer from "./loginSlice";
+import favouritesReducer from "./favouritesSlice";
 
 export const store = configureStore({
 	reducer: {
 		counter: counterReducer,
 		login: loginReducer,
+		favourites: favouritesReducer,
 		[hsApi.reducerPath]: hsApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
