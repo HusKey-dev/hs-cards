@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Select, InputLabel, MenuItem, FormControl } from "@mui/material";
 
-// propTypes will be implemented here
+// propTypes are implemented here
 
 CustomSelect.propTypes = {
 	value: PropTypes.string,

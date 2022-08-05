@@ -46,8 +46,6 @@ const mapStateToProps = (state: RootState) => {
 	};
 };
 
-// export type ComponentProps = ReturnType<typeof mapStateToProps>;
-
 const connector = connect(mapStateToProps, { logOut });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

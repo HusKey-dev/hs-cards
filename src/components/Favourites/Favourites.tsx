@@ -1,8 +1,10 @@
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { deleteFavourite } from "../../app/favouritesSlice";
 import { Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { deleteFavourite } from "../../app/favouritesSlice";
+
 import "./Favourites.scss";
 
 function Favourites() {

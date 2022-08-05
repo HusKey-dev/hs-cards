@@ -1,18 +1,16 @@
 import { Link } from "react-router-dom";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Button } from "@mui/material";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { clearHistory } from "../../app/historySlice";
-import { useId } from "react";
-import { Button } from "@mui/material";
 
 import "./History.scss";
 
 function History() {
 	const dispatch = useAppDispatch();
 	const { data } = useAppSelector((state) => state.history);
-	// const id = useId();
 
 	return (
 		<div className="history">
@@ -45,7 +43,9 @@ function History() {
 						.reverse()}
 				</>
 			) : (
-				<div>Список пуст</div>
+				<h3 style={{ alignSelf: "center", justifySelf: "center" }}>
+					Список пуст
+				</h3>
 			)}
 		</div>
 	);

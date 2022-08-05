@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { hsApi } from "../../app/hsAPI";
 import { putFavourite } from "../../app/favouritesSlice";
@@ -66,7 +67,11 @@ function SingleCard() {
 			</div>
 		);
 
-	return <div>Загрузка...</div>;
+	return (
+		<div className="singleCard">
+			<h3 style={{ margin: "auto" }}>Загрузка...</h3>Загрузка...
+		</div>
+	);
 }
 
 export default SingleCard;

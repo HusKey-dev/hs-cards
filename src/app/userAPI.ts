@@ -3,7 +3,7 @@ export interface User {
 	password: string;
 }
 
-export const delay: number = 500;
+export const delay: number = 300;
 
 export const userApi = {
 	get(user: User) {

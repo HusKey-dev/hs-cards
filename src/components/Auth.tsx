@@ -6,10 +6,6 @@ import { getFavourites } from "../app/favouritesSlice";
 import { getHistory } from "../app/historySlice";
 
 class Auth extends Component<PropsFromRedux> {
-	// constructor(props: PropsFromRedux) {
-	// 	super(props);
-	// }
-
 	componentDidMount() {
 		const login = sessionStorage.getItem("login");
 		if (login) {

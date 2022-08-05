@@ -16,7 +16,7 @@ import SignUp from "./components/SignUp/SignUp";
 import Favourites from "./components/Favourites/Favourites";
 import History from "./components/History/History";
 import Guard from "./components/Guard";
-import SingleCard from "./components/SingleCard";
+import SingleCard from "./components/SingleCard/SingleCard";
 import Auth from "./components/Auth";
 import ErrBoundary from "./components/ErrBoundary";
 
@@ -32,31 +32,6 @@ const theme = createTheme({
 });
 
 function App() {
-	// This part is temporary exaple of api usage and will be moved to redux
-	const BASE_URL: string = "https://omgvamp-hearthstone-v1.p.rapidapi.com";
-	const options = {
-		headers: {
-			"X-RapidAPI-Key":
-				"f5a34a1d05msh6cefd8e196dee44p1bb0b5jsnae588fd2281a",
-			"X-RapidAPI-Host": "omgvamp-hearthstone-v1.p.rapidapi.com",
-			locale: "ruRU",
-		},
-		params: {
-			name: "корольfjfhg ан",
-			collectible: "1",
-			locale: "ruRU",
-		},
-	};
-	const handleClick = async () => {
-		let res = await axios.get(
-			`${BASE_URL}/cards/search/${options.params.name}`,
-			options
-		);
-		console.log(res);
-		// res = await axios.get(`${BASE_URL}/info`, options);
-		// console.log(res);
-	};
-
 	return (
 		<div className="App">
 			<Router>

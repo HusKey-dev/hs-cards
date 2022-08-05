@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
 import { Button } from "@mui/material";
 
 import { useAppDispatch } from "../../app/hooks";
-
 import { hsApi } from "../../app/hsAPI";
 import CustomSelect from "../CustomSelect/CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import SearchResults from "../SearchResults/SearchResults";
-import SingleCard from "../SingleCard";
-import { useSearchParams } from "react-router-dom";
 import { postHistory } from "../../app/historySlice";
 
 interface Filters {
@@ -44,6 +43,7 @@ function Main() {
 		skip: !(debouncedInput.length > 1),
 	});
 
+	const initialized = !!(cardResults || error);
 	console.log(error);
 
 	const translateFilter = (filter: string): string => {
@@ -65,16 +65,16 @@ function Main() {
 		})
 		.replaceAll(".", "/");
 
-	// useEffect(() => {
-	// 	if (searchParams) {
-	// 		setFilters({
-	// 			playerClass: searchParams.get("class") || "Все",
-	// 			rarity: searchParams.get("rarity") || "Все",
-	// 			type: searchParams.get("type") || "Все",
-	// 		});
-	// 		setInput(searchParams.get("input") || "");
-	// 	}
-	// }, []);
+	useEffect(() => {
+		if (searchParams && infoStatus && infoStatusRus) {
+			setFilters({
+				playerClass: paramsClass || "Все",
+				rarity: paramsRarity || "Все",
+				type: paramsType || "Все",
+			});
+			setInput(searchParams.get("input") || "");
+		}
+	}, [paramsClass, paramsRarity, paramsType, infoStatus, infoStatusRus]);
 
 	// If we navigate back through history, component will update its state
 	if (debouncedInput) {
@@ -130,13 +130,7 @@ function Main() {
 
 	return (
 		<div className="padding-1">
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				Laboriosam perspiciatis, saepe pariatur doloremque est molestias
-				fuga commodi similique, ea nisi odit distinctio sapiente facilis
-				harum autem? Delectus assumenda aspernatur, iste quos placeat
-				fugiat nihil laboriosam eaque molestiae temporibus sit error!
-			</p>
+			<p>Введите название карты, например "Король-лич"</p>
 			<br />
 			<CustomSelect
 				value={filters.playerClass || "Все"}
@@ -185,7 +179,7 @@ function Main() {
 			>
 				Нажми на меня
 			</Button>
-			{cardResults && (
+			{initialized && (
 				<SearchResults
 					filters={{
 						playerClass: translateFilter(filters.playerClass),
