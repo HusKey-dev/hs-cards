@@ -40,9 +40,17 @@ function SingleCard() {
 						</h3>
 					) : null}
 					<br />
-					<p>Тип: {card.type}</p>
-					<p>Редкость: {card.rarity}</p>
-					<p>Сет: {card.cardSet}</p>
+					<p>
+						<span className="property-name"> Тип:</span> {card.type}
+					</p>
+					<p>
+						<span className="property-name">Редкость: </span>
+						{card.rarity}
+					</p>
+					<p>
+						<span className="property-name">Сет: </span>
+						{card.cardSet}
+					</p>
 					{card.faction ? <p>Фракция: {card.faction}</p> : null}
 
 					<div className="button-container">

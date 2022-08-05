@@ -19,6 +19,7 @@ function History() {
 					<Button
 						color="secondary"
 						variant="contained"
+						sx={{ marginBottom: "1.5rem" }}
 						endIcon={<DeleteIcon />}
 						onClick={() => dispatch(clearHistory())}
 					>
@@ -43,7 +44,13 @@ function History() {
 						.reverse()}
 				</>
 			) : (
-				<h3 style={{ alignSelf: "center", justifySelf: "center" }}>
+				<h3
+					style={{
+						alignSelf: "center",
+						justifySelf: "center",
+						textAlign: "center",
+					}}
+				>
 					Список пуст
 				</h3>
 			)}

@@ -33,7 +33,7 @@ function SearchResults({ results, filters }) {
 							style={{ height: "300px" }}
 							alt={card.name}
 						/>
-						<p>{card.name}</p>
+						<p className="card__name">{card.name}</p>
 					</Link>
 				))
 			)}

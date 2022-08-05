@@ -10,6 +10,8 @@ import SearchPanel from "../SearchPanel/SearchPanel";
 import SearchResults from "../SearchResults/SearchResults";
 import { postHistory } from "../../app/historySlice";
 
+import "./Main.scss";
+
 interface Filters {
 	playerClass: string;
 	rarity: string;
@@ -128,11 +130,11 @@ function Main() {
 		};
 
 	return (
-		<div className="padding-1">
-			<p>Введите название карты, например "Король-лич"</p>
-			<br />
-
-			<div>
+		<div className="padding-1 main">
+			<p className="hero">
+				Введите название карты, например "Король-лич"
+			</p>
+			<div className="main__filters">
 				<CustomSelect
 					value={filters.playerClass || "Все"}
 					id="class"

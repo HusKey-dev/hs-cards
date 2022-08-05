@@ -34,7 +34,7 @@ function Favourites() {
 					))}
 				</>
 			) : (
-				<div>Список пуст</div>
+				<h3 className="no-result">Список пуст</h3>
 			)}
 		</div>
 	);

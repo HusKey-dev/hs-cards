@@ -1,8 +1,9 @@
 .history {
-	// display: flex;
-	// flex-direction: column;
-	// justify-items: center;
+	padding-top: 2rem;
+
 	.history__result {
+		margin-top: 1.5rem;
+
 		display: flex;
 		align-items: center;
 		border-radius: 5px;

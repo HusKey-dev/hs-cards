@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Autocomplete, TextField, Button, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
+import "./SearchPanel.scss";
+
 interface SearchPanelProps {
 	value: string;
 	onChange?: (event: React.SyntheticEvent, newValue: string) => void;
@@ -13,12 +15,13 @@ function SearchPanel({ value, suggests, onChange }: SearchPanelProps) {
 	const [height, setHeight] = useState<string>("0px");
 
 	return (
-		<div>
+		<div className="searchPanel">
 			<Autocomplete
 				blurOnSelect={true}
 				freeSolo
 				sx={{
-					width: "400px",
+					width: "100%",
+					maxWidth: "700px",
 				}}
 				options={(value.length > 1 && suggests) || []}
 				inputValue={value}

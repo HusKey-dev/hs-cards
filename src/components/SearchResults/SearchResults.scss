@@ -17,4 +17,13 @@
 	img {
 		display: block;
 	}
+
+	.card__name {
+		font-size: 1rem;
+		font-weight: bold;
+		padding-bottom: 0.7rem;
+		color: gold;
+
+		text-shadow: 0px 0px 10px black, 0px 0px 2px black, 0px 0px 2px black;
+	}
 }
