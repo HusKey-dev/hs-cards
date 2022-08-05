@@ -15,7 +15,7 @@ function Favourites() {
 				<>
 					{data.map((el) => (
 						<div key={el.id} className="favourites__result">
-							<Link to={`./card/${el.id}`} key={el.id}>
+							<Link to={`../card/${el.id}`} key={el.id}>
 								<img src={el.img} alt={el.cardName} />
 								<p>{el.cardName}</p>
 							</Link>

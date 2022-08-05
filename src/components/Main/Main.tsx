@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@mui/material";
 
+import { useAppDispatch } from "../../app/hooks";
+
 import { hsApi } from "../../app/hsAPI";
 import CustomSelect from "../CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import SearchResults from "../SearchResults";
 import SingleCard from "../SingleCard";
 import { useSearchParams } from "react-router-dom";
+import { postHistory } from "../../app/historySlice";
 
 interface Filters {
 	playerClass: string;
@@ -15,6 +18,7 @@ interface Filters {
 }
 
 function Main() {
+	const dispatch = useAppDispatch();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [input, setInput] = useState(searchParams.get("input") || "");
 	const [debouncedInput, setDebouncedInput] = useState("");
@@ -32,12 +36,15 @@ function Main() {
 	const { data: info, isSuccess: infoStatus } = hsApi.useFetchInfoQuery("");
 	const { data: infoRus, isSuccess: infoStatusRus } =
 		hsApi.useFetchInfoQuery("ruRU");
-	const { data: cardResults, isSuccess } = hsApi.useSearchCardQuery(
-		debouncedInput,
-		{
-			skip: !(debouncedInput.length > 1),
-		}
-	);
+	const {
+		data: cardResults,
+		error,
+		isSuccess,
+	} = hsApi.useSearchCardQuery(debouncedInput, {
+		skip: !(debouncedInput.length > 1),
+	});
+
+	console.log(error);
 
 	const translateFilter = (filter: string): string => {
 		if (!info || !infoRus) return "Все";
@@ -47,6 +54,16 @@ function Main() {
 		}
 		return "Все";
 	};
+
+	const date: string = new Date()
+		.toLocaleString("ru", {
+			day: "numeric",
+			month: "2-digit",
+			year: "numeric",
+			hour: "numeric",
+			minute: "2-digit",
+		})
+		.replaceAll(".", "/");
 
 	// useEffect(() => {
 	// 	if (searchParams) {
@@ -74,7 +91,7 @@ function Main() {
 
 	useEffect(() => {
 		console.log("рендер");
-		console.log();
+		console.log(searchParams);
 	}, []);
 
 	// debouncing search query
@@ -89,6 +106,14 @@ function Main() {
 					input,
 				});
 				setDebouncedInput(input);
+				console.log("searchparams ", searchParams.toString());
+				dispatch(
+					postHistory({
+						input,
+						queryString: searchParams.toString(),
+						date,
+					})
+				);
 			}, 1000);
 			return () => clearTimeout(timeout);
 		}
@@ -166,7 +191,7 @@ function Main() {
 					rarity: translateFilter(filters.rarity),
 					type: translateFilter(filters.type),
 				}}
-				results={cardResults && cardResults.length ? cardResults : []}
+				results={error ? [] : cardResults}
 			/>
 		</div>
 	);

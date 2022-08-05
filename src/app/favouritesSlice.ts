@@ -5,7 +5,7 @@ import { logOut } from "./loginSlice";
 export const getFavourites = createAsyncThunk(
 	"favourites/get",
 	async (param = undefined, thunkAPI: any) => {
-		console.log("get favourites slice");
+		// console.log("get favourites slice");
 		const userName: string = thunkAPI.getState().login.userName;
 		return await favouritesAPI.get(userName);
 	}

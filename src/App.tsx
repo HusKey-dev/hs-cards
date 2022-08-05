@@ -65,10 +65,7 @@ function App() {
 						<div className="container">
 							<Routes>
 								<Route path="/" element={<Main />} />
-								<Route
-									path="/search/:params"
-									element={<Main />}
-								/>
+								<Route path="/search" element={<Main />} />
 								<Route
 									path="/card/:cardId"
 									element={<SingleCard />}
@@ -91,10 +88,10 @@ function App() {
 										</Guard>
 									}
 								/>
-								<Route
+								{/* <Route
 									path="*"
 									element={<Navigate replace to="/" />}
-								/>
+								/> */}
 							</Routes>
 						</div>
 					</div>
