@@ -96,7 +96,7 @@ function SignIn(props: PropsFromRedux) {
 				label="Имя пользователя"
 				value={state.login}
 				error={!!getErrMessage("login")}
-				helperText={getErrMessage("login")}
+				helperText={" " + getErrMessage("login")}
 				onChange={handleChange("login")}
 				onBlur={handleInputBlur("login")}
 				onFocus={handleInputFocus("login")}
@@ -110,7 +110,7 @@ function SignIn(props: PropsFromRedux) {
 				value={state.password}
 				type={state.showPassword ? "text" : "password"}
 				error={!!getErrMessage("password")}
-				helperText={getErrMessage("password")}
+				helperText={" " + getErrMessage("password")}
 				onChange={handleChange("password")}
 				onKeyDown={handleKeyDown}
 				onFocus={handleInputFocus("password")}
