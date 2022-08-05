@@ -18,6 +18,7 @@ import History from "./components/History/History";
 import Guard from "./components/Guard";
 import SingleCard from "./components/SingleCard";
 import Auth from "./components/Auth";
+import ErrBoundary from "./components/ErrBoundary";
 
 const theme = createTheme({
 	palette: {
@@ -68,7 +69,11 @@ function App() {
 								<Route path="/search" element={<Main />} />
 								<Route
 									path="/card/:cardId"
-									element={<SingleCard />}
+									element={
+										<ErrBoundary>
+											<SingleCard />
+										</ErrBoundary>
+									}
 								/>
 								<Route path="/signin" element={<SignIn />} />
 								<Route path="/signup" element={<SignUp />} />

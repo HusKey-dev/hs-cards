@@ -185,14 +185,16 @@ function Main() {
 			>
 				Нажми на меня
 			</Button>
-			<SearchResults
-				filters={{
-					playerClass: translateFilter(filters.playerClass),
-					rarity: translateFilter(filters.rarity),
-					type: translateFilter(filters.type),
-				}}
-				results={error ? [] : cardResults}
-			/>
+			{cardResults && (
+				<SearchResults
+					filters={{
+						playerClass: translateFilter(filters.playerClass),
+						rarity: translateFilter(filters.rarity),
+						type: translateFilter(filters.type),
+					}}
+					results={error ? [] : cardResults}
+				/>
+			)}
 		</div>
 	);
 }

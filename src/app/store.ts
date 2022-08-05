@@ -5,7 +5,6 @@ import {
 	getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 
-import counterReducer from "../features/counter/counterSlice";
 import { hsApi } from "./hsAPI";
 import loginReducer from "./loginSlice";
 import favouritesReducer from "./favouritesSlice";
@@ -18,7 +17,6 @@ const dateMiddleware = (store: any) => (next: any) => (action: any) => {
 
 export const store = configureStore({
 	reducer: {
-		counter: counterReducer,
 		login: loginReducer,
 		favourites: favouritesReducer,
 		history: historyReducer,
