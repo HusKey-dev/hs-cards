@@ -53,6 +53,17 @@ function SignUp(props: PropsFromRedux) {
 	const getErrMessage = (prop: Prop): string =>
 		createErrMessage(prop, state, props);
 
+	const isFormValid = !(
+		!!props.userName ||
+		state.password1 !== state.password2 ||
+		!(state.login && state.password1 && state.password2) ||
+		!!(
+			getErrMessage("login") ||
+			getErrMessage("password1") ||
+			getErrMessage("password2")
+		)
+	);
+
 	const handlePasswordIconClick = () => {
 		setState({ ...state, showPassword: !state.showPassword });
 	};
@@ -88,13 +99,15 @@ function SignUp(props: PropsFromRedux) {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		// changing state to make fields ready to show erorrs from api
-		setState({
-			...state,
-			password1IsTouched: false,
-			loginIsTouched: false,
-		});
-		props.createUser({ login: state.login, password: state.password1 });
-		console.log({ login: state.login, password: state.password1 });
+		if (isFormValid) {
+			setState({
+				...state,
+				password1IsTouched: false,
+				loginIsTouched: false,
+			});
+			props.createUser({ login: state.login, password: state.password1 });
+			console.log({ login: state.login, password: state.password1 });
+		}
 	};
 
 	return (
@@ -166,20 +179,7 @@ function SignUp(props: PropsFromRedux) {
 			/>
 			<br />
 			<br />
-			<Button
-				disabled={
-					!!props.userName ||
-					state.password1 !== state.password2 ||
-					!(state.login && state.password1 && state.password2) ||
-					!!(
-						getErrMessage("login") ||
-						getErrMessage("password1") ||
-						getErrMessage("password2")
-					)
-				}
-				variant="contained"
-				type="submit"
-			>
+			<Button disabled={!isFormValid} variant="contained" type="submit">
 				Создать пользователя
 			</Button>
 			{!props.userName ? null : (

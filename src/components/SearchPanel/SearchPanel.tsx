@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Autocomplete, TextField, Button, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -11,7 +11,7 @@ interface SearchPanelProps {
 }
 
 function SearchPanel({ value, suggests, onChange }: SearchPanelProps) {
-	const inputEl = useRef<any>(null);
+	const inputEl = useRef<React.MutableRefObject<any>>(null);
 	const [height, setHeight] = useState<string>("0px");
 
 	return (

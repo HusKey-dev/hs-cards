@@ -46,6 +46,11 @@ function SignIn(props: PropsFromRedux) {
 	const getErrMessage = (prop: "login" | "password"): string =>
 		createErrMessage(prop, state, props);
 
+	const isFormValid = !(
+		!(state.login && state.password) ||
+		!!(getErrMessage("login") || getErrMessage("password"))
+	);
+
 	const handlePasswordIconClick = () => {
 		setState({ ...state, showPassword: !state.showPassword });
 	};
@@ -84,9 +89,15 @@ function SignIn(props: PropsFromRedux) {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		// changing state to make fields ready to show erorrs from api
-		setState({ ...state, passwordIsTouched: false, loginIsTouched: false });
-		props.logIn({ login: state.login, password: state.password });
-		console.log({ login: state.login, password: state.password });
+		if (isFormValid) {
+			setState({
+				...state,
+				passwordIsTouched: false,
+				loginIsTouched: false,
+			});
+			props.logIn({ login: state.login, password: state.password });
+			console.log({ login: state.login, password: state.password });
+		}
 	};
 
 	return (
@@ -132,14 +143,7 @@ function SignIn(props: PropsFromRedux) {
 			/>
 			<br />
 			<br />
-			<Button
-				disabled={
-					!(state.login && state.password) ||
-					!!(getErrMessage("login") || getErrMessage("password"))
-				}
-				variant="contained"
-				type="submit"
-			>
+			<Button disabled={!isFormValid} variant="contained" type="submit">
 				Войти
 			</Button>
 		</form>
