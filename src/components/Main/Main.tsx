@@ -4,9 +4,9 @@ import { Button } from "@mui/material";
 import { useAppDispatch } from "../../app/hooks";
 
 import { hsApi } from "../../app/hsAPI";
-import CustomSelect from "../CustomSelect";
+import CustomSelect from "../CustomSelect/CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
-import SearchResults from "../SearchResults";
+import SearchResults from "../SearchResults/SearchResults";
 import SingleCard from "../SingleCard";
 import { useSearchParams } from "react-router-dom";
 import { postHistory } from "../../app/historySlice";

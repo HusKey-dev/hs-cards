@@ -1,7 +1,12 @@
-// Prop types will be implemented here
-
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+
 import "./SearchResults.scss";
+
+SearchResults.propTypes = {
+	results: PropTypes.arrayOf(PropTypes.object),
+	filters: PropTypes.objectOf(PropTypes.string),
+};
 
 function SearchResults({ results, filters }) {
 	let filteredResults = [...results];

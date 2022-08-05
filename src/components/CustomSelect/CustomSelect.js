@@ -1,6 +1,16 @@
+import PropTypes from "prop-types";
 import { Select, InputLabel, MenuItem, FormControl } from "@mui/material";
 
 // propTypes will be implemented here
+
+CustomSelect.propTypes = {
+	value: PropTypes.string,
+	label: PropTypes.string,
+	id: PropTypes.string,
+	requiredOption: PropTypes.string,
+	options: PropTypes.arrayOf(PropTypes.string),
+	onChange: PropTypes.func,
+};
 
 function CustomSelect({
 	value,
