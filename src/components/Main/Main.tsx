@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@mui/material";
 
+import { useAppDispatch } from "../../app/hooks";
+
 import { hsApi } from "../../app/hsAPI";
 import CustomSelect from "../CustomSelect";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import SearchResults from "../SearchResults";
 import SingleCard from "../SingleCard";
+import { useSearchParams } from "react-router-dom";
+import { postHistory } from "../../app/historySlice";
 
 interface Filters {
 	playerClass: string;
@@ -14,23 +18,33 @@ interface Filters {
 }
 
 function Main() {
-	const [input, setInput] = useState("");
+	const dispatch = useAppDispatch();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [input, setInput] = useState(searchParams.get("input") || "");
 	const [debouncedInput, setDebouncedInput] = useState("");
+	const paramsInput = searchParams.get("input");
+	const paramsClass = searchParams.get("class");
+	const paramsRarity = searchParams.get("rarity");
+	const paramsType = searchParams.get("type");
+
 	const [filters, setFilters] = useState<Filters>({
-		playerClass: "Все",
-		rarity: "Все",
-		type: "Все",
+		playerClass: paramsClass || "Все",
+		rarity: paramsRarity || "Все",
+		type: paramsType || "Все",
 	});
 
 	const { data: info, isSuccess: infoStatus } = hsApi.useFetchInfoQuery("");
 	const { data: infoRus, isSuccess: infoStatusRus } =
 		hsApi.useFetchInfoQuery("ruRU");
-	const { data: cardResults, isSuccess } = hsApi.useSearchCardQuery(
-		debouncedInput,
-		{
-			skip: !(debouncedInput.length > 1),
-		}
-	);
+	const {
+		data: cardResults,
+		error,
+		isSuccess,
+	} = hsApi.useSearchCardQuery(debouncedInput, {
+		skip: !(debouncedInput.length > 1),
+	});
+
+	console.log(error);
 
 	const translateFilter = (filter: string): string => {
 		if (!info || !infoRus) return "Все";
@@ -41,12 +55,65 @@ function Main() {
 		return "Все";
 	};
 
+	const date: string = new Date()
+		.toLocaleString("ru", {
+			day: "numeric",
+			month: "2-digit",
+			year: "numeric",
+			hour: "numeric",
+			minute: "2-digit",
+		})
+		.replaceAll(".", "/");
+
+	// useEffect(() => {
+	// 	if (searchParams) {
+	// 		setFilters({
+	// 			playerClass: searchParams.get("class") || "Все",
+	// 			rarity: searchParams.get("rarity") || "Все",
+	// 			type: searchParams.get("type") || "Все",
+	// 		});
+	// 		setInput(searchParams.get("input") || "");
+	// 	}
+	// }, []);
+
+	// If we navigate back through history, component will update its state
+	if (debouncedInput) {
+		if (paramsInput !== debouncedInput) {
+			setInput(paramsInput || "");
+			setDebouncedInput(paramsInput || "");
+			setFilters({
+				playerClass: paramsClass || "Все",
+				rarity: paramsRarity || "Все",
+				type: paramsType || "Все",
+			});
+		}
+	}
+
+	useEffect(() => {
+		console.log("рендер");
+		console.log(searchParams);
+	}, []);
+
 	// debouncing search query
 	useEffect(() => {
 		// will not search if query is too short or empty
 		if (input.length > 1) {
 			const timeout = setTimeout(() => {
+				setSearchParams({
+					class: filters.playerClass,
+					rarity: filters.rarity,
+					type: filters.type,
+					input,
+				});
 				setDebouncedInput(input);
+				console.log("searchparams ", searchParams.toString());
+				dispatch(
+					postHistory({
+						input,
+						queryString: searchParams.toString(),
+						date,
+					})
+				);
 			}, 1000);
 			return () => clearTimeout(timeout);
 		}
@@ -124,7 +191,7 @@ function Main() {
 					rarity: translateFilter(filters.rarity),
 					type: translateFilter(filters.type),
 				}}
-				results={cardResults && cardResults.length ? cardResults : []}
+				results={error ? [] : cardResults}
 			/>
 		</div>
 	);

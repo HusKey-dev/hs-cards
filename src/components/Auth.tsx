@@ -3,6 +3,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../app/store";
 import { forceLogIn, logOut } from "../app/loginSlice";
 import { getFavourites } from "../app/favouritesSlice";
+import { getHistory } from "../app/historySlice";
 
 class Auth extends Component<PropsFromRedux> {
 	// constructor(props: PropsFromRedux) {
@@ -26,6 +27,7 @@ class Auth extends Component<PropsFromRedux> {
 				console.log("auth", this.props.isLoggedIn);
 				sessionStorage.setItem("login", this.props.userName);
 				this.props.getFavourites();
+				this.props.getHistory();
 			} else {
 				console.log("session storage cleared");
 				sessionStorage.clear();
@@ -46,6 +48,7 @@ const connector = connect(mapStateToProps, {
 	forceLogIn,
 	logOut,
 	getFavourites,
+	getHistory,
 });
 type PropsFromRedux = ConnectedProps<typeof connector>;
 export default connector(Auth);

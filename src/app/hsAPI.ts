@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 export interface SingleCardResponse {
 	cardId: string;
 	name: string;
@@ -65,7 +66,6 @@ export const hsApi = createApi({
 				},
 			}),
 			transformResponse: (response: Array<SingleCardResponse> | []) => {
-				if (!response.length) return [];
 				return response
 					.filter((el) => el.img && el.playerClass && el.rarity)
 					.map((el) => {
