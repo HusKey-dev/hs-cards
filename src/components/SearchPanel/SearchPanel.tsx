@@ -28,7 +28,7 @@ function SearchPanel({ value, suggests, onChange }: SearchPanelProps) {
 				)}
 			/>
 
-			<Button
+			{/* <Button
 				variant="contained"
 				sx={{
 					height,
@@ -37,7 +37,7 @@ function SearchPanel({ value, suggests, onChange }: SearchPanelProps) {
 				}}
 			>
 				<SearchIcon />
-			</Button>
+			</Button> */}
 		</div>
 	);
 }

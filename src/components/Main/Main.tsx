@@ -106,7 +106,6 @@ function Main() {
 					input,
 				});
 				setDebouncedInput(input);
-				console.log("searchparams ", searchParams.toString());
 				dispatch(
 					postHistory({
 						input,
@@ -132,31 +131,33 @@ function Main() {
 		<div className="padding-1">
 			<p>Введите название карты, например "Король-лич"</p>
 			<br />
-			<CustomSelect
-				value={filters.playerClass || "Все"}
-				id="class"
-				label="Класс"
-				requiredOption="Все"
-				options={infoStatusRus ? infoRus?.classes : []}
-				onChange={handleSelect("playerClass")}
-			/>
-			<CustomSelect
-				value={filters.rarity || "Все"}
-				id="rarity"
-				label="Редкость"
-				requiredOption="Все"
-				options={infoStatusRus ? infoRus?.qualities : []}
-				onChange={handleSelect("rarity")}
-			/>
-			<CustomSelect
-				value={filters.type || "все"}
-				id="type"
-				label="Тип карты"
-				requiredOption="Все"
-				options={infoStatus ? infoRus?.types : []}
-				onChange={handleSelect("type")}
-			/>
 
+			<div>
+				<CustomSelect
+					value={filters.playerClass || "Все"}
+					id="class"
+					label="Класс"
+					requiredOption="Все"
+					options={infoStatusRus ? infoRus?.classes : []}
+					onChange={handleSelect("playerClass")}
+				/>
+				<CustomSelect
+					value={filters.rarity || "Все"}
+					id="rarity"
+					label="Редкость"
+					requiredOption="Все"
+					options={infoStatusRus ? infoRus?.qualities : []}
+					onChange={handleSelect("rarity")}
+				/>
+				<CustomSelect
+					value={filters.type || "все"}
+					id="type"
+					label="Тип карты"
+					requiredOption="Все"
+					options={infoStatus ? infoRus?.types : []}
+					onChange={handleSelect("type")}
+				/>
+			</div>
 			<SearchPanel
 				value={input}
 				onChange={handleInputChange}
@@ -169,16 +170,6 @@ function Main() {
 				}
 			/>
 
-			{/* This button is temporary and will be removed */}
-			<Button
-				onClick={() => {
-					console.log(info);
-					console.log(infoRus);
-					console.log(cardResults);
-				}}
-			>
-				Нажми на меня
-			</Button>
 			{initialized && (
 				<SearchResults
 					filters={{
