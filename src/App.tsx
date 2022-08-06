@@ -36,6 +36,7 @@ const theme = createTheme({
 function App() {
 	return (
 		<div className="App">
+			<Auth />
 			<Router>
 				<ColorContext.Provider value={"#d6e6f5"}>
 					<ThemeProvider theme={theme}>
@@ -84,7 +85,6 @@ function App() {
 								</Routes>
 							</div>
 						</div>
-						<Auth />
 					</ThemeProvider>
 				</ColorContext.Provider>
 			</Router>

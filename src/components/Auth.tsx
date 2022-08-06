@@ -1,9 +1,12 @@
 import { Component } from "react";
 import { connect, ConnectedProps } from "react-redux";
+
 import { RootState } from "../app/store";
 import { forceLogIn, logOut } from "../app/loginSlice";
 import { getFavourites } from "../app/favouritesSlice";
 import { getHistory } from "../app/historySlice";
+
+// This component re-initialisates the store in case of user reloads page
 
 class Auth extends Component<PropsFromRedux> {
 	componentDidMount() {
