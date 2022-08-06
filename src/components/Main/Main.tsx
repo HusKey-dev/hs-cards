@@ -108,8 +108,6 @@ function Main() {
 				};
 				setSearchParams(params);
 				setDebouncedInput(input);
-				console.log(input);
-				console.log(searchParams.toString());
 				dispatch(
 					postHistory({
 						input,
