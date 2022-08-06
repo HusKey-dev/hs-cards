@@ -16,7 +16,6 @@ export const createErrMessage: CreateErrMessage = (prop, state, props) => {
 		!state[`${prop}IsTouched`] &&
 		props.err[`${prop}Err`]
 	) {
-		console.log(state, props);
 		// only showing error before we touch it to change
 		return `Такой пользователь уже существет`;
 	} else if (

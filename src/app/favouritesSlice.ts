@@ -14,7 +14,6 @@ export const getFavourites = createAsyncThunk(
 export const putFavourite = createAsyncThunk(
 	"favourites/put",
 	async (record: FavRecord, thunkAPI: any) => {
-		console.log("put favourite thunk");
 		const userName: string = thunkAPI.getState().login.userName;
 		return await favouritesAPI.put(userName, record);
 	}

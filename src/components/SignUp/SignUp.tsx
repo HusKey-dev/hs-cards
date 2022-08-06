@@ -106,7 +106,6 @@ function SignUp(props: PropsFromRedux) {
 				loginIsTouched: false,
 			});
 			props.createUser({ login: state.login, password: state.password1 });
-			console.log({ login: state.login, password: state.password1 });
 		}
 	};
 

@@ -96,7 +96,6 @@ function SignIn(props: PropsFromRedux) {
 				loginIsTouched: false,
 			});
 			props.logIn({ login: state.login, password: state.password });
-			console.log({ login: state.login, password: state.password });
 		}
 	};
 

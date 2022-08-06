@@ -9,8 +9,8 @@ SearchResults.propTypes = {
 };
 
 function SearchResults({ results, filters }) {
-	console.log(results);
 	let filteredResults = [...results];
+
 	for (let filter in filters) {
 		filteredResults = filteredResults.filter(
 			(el) => filters[filter] === "Все" || filters[filter] === el[filter]

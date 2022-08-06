@@ -9,23 +9,17 @@ class Auth extends Component<PropsFromRedux> {
 	componentDidMount() {
 		const login = sessionStorage.getItem("login");
 		if (login) {
-			console.log("getting login from session storage");
-			console.log("forcing log in");
-			console.log(this.props);
 			this.props.forceLogIn(login);
 		}
 	}
 
 	componentDidUpdate(prevProps: PropsFromRedux) {
-		console.log("render");
 		if (this.props.userName !== prevProps.userName) {
 			if (this.props.isLoggedIn) {
-				console.log("auth", this.props.isLoggedIn);
 				sessionStorage.setItem("login", this.props.userName);
 				this.props.getFavourites();
 				this.props.getHistory();
 			} else {
-				console.log("session storage cleared");
 				sessionStorage.clear();
 			}
 		}

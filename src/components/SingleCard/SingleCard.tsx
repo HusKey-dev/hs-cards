@@ -23,10 +23,6 @@ function SingleCard() {
 	const showButton =
 		isLoggedIn && cardId && !favourites.some((el) => el.id === cardId);
 
-	useEffect(() => {
-		console.log(favourites);
-	}, [favourites.length]);
-
 	if (isSuccess && card)
 		return (
 			<div className="singleCard">
@@ -81,7 +77,7 @@ function SingleCard() {
 
 	return (
 		<div className="singleCard">
-			<h3 style={{ margin: "auto" }}>Загрузка...</h3>Загрузка...
+			<h3 style={{ margin: "auto" }}>Загрузка...</h3>
 		</div>
 	);
 }

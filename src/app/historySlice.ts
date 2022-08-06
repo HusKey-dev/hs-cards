@@ -5,7 +5,6 @@ import { logOut } from "./loginSlice";
 export const getHistory = createAsyncThunk(
 	"history/get",
 	async (param = undefined, thunkAPI: any) => {
-		console.log("get history slice");
 		const userName: string = thunkAPI.getState().login.userName;
 		return await historyAPI.get(userName);
 	}
@@ -14,7 +13,7 @@ export const getHistory = createAsyncThunk(
 export const postHistory = createAsyncThunk(
 	"history/post",
 	async (record: HistRecord, thunkAPI: any) => {
-		console.log("post history thunk");
+		// console.log("post history thunk");
 		const userName: string = thunkAPI.getState().login.userName;
 		return await historyAPI.post(userName, record);
 	},
@@ -24,7 +23,7 @@ export const postHistory = createAsyncThunk(
 			const isLoggedIn: boolean = getState().login.isLoggedIn;
 
 			if (!isLoggedIn) {
-				console.log("cancelled");
+				// console.log("cancelled");
 				return false;
 			}
 		},

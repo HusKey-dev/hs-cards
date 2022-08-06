@@ -13,8 +13,6 @@ export const favouritesAPI = {
 	get: (login: string) =>
 		new Promise<FavRecord[]>((resolve, reject) => {
 			const dataString = localStorage.getItem(login);
-			// console.log(dataString);
-			// console.log(JSON.parse(dataString as string));
 			setTimeout(() => {
 				if (!dataString) reject("Пользователь не существует");
 				const localFavourites: FavRecord[] | undefined = JSON.parse(
