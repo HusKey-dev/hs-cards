@@ -37,6 +37,7 @@ function Main() {
 	const { data: info, isSuccess: infoStatus } = hsApi.useFetchInfoQuery("");
 	const { data: infoRus, isSuccess: infoStatusRus } =
 		hsApi.useFetchInfoQuery("ruRU");
+
 	const {
 		data: cardResults,
 		error,
