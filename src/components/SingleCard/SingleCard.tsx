@@ -51,6 +51,10 @@ function SingleCard() {
 						<span className="property-name">Сет: </span>
 						{card.cardSet}
 					</p>
+					<p>
+						<span className="property-name">Класс: </span>
+						{card.playerClass}
+					</p>
 					{card.faction ? <p>Фракция: {card.faction}</p> : null}
 
 					<div className="button-container">

@@ -11,6 +11,7 @@ interface InfoResponse {
 	[propName: string]: any;
 }
 
+// These keys are visible through devtools so it is worthless to hide them in env.file
 const API_KEY = {
 	header: "X-RapidAPI-Key",
 	key: "f5a34a1d05msh6cefd8e196dee44p1bb0b5jsnae588fd2281a",

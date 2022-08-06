@@ -45,7 +45,7 @@ function Main() {
 		skip: !(debouncedInput.length > 1),
 	});
 
-	const initialized = !!(cardResults || error);
+	const iSinitialized = !!(cardResults || error);
 
 	const translateFilter = (filter: string): string => {
 		if (!info || !infoRus) return "Все";
@@ -66,6 +66,7 @@ function Main() {
 		})
 		.replaceAll(".", "/");
 
+	// kind of fixes bug with back navigation
 	useEffect(() => {
 		if (searchParams && infoStatus && infoStatusRus) {
 			setFilters({
@@ -89,11 +90,6 @@ function Main() {
 			});
 		}
 	}
-
-	useEffect(() => {
-		console.log("рендер");
-		console.log(searchParams);
-	}, []);
 
 	// debouncing search query
 	useEffect(() => {
@@ -176,7 +172,7 @@ function Main() {
 				}
 			/>
 
-			{initialized && (
+			{iSinitialized && (
 				<SearchResults
 					filters={{
 						playerClass: translateFilter(filters.playerClass),
