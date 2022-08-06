@@ -10,8 +10,9 @@ import loginReducer from "./loginSlice";
 import favouritesReducer from "./favouritesSlice";
 import historyReducer from "./historySlice";
 
+// Some sort of custom middleware. Do not really need it since rtk query has kind-of private actions
 const dateMiddleware = (store: any) => (next: any) => (action: any) => {
-	console.log(action);
+	// console.log(action);
 	return next(action);
 };
 
