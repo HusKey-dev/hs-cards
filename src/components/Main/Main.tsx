@@ -46,7 +46,6 @@ function Main() {
 	});
 
 	const initialized = !!(cardResults || error);
-	console.log(error);
 
 	const translateFilter = (filter: string): string => {
 		if (!info || !infoRus) return "Все";
@@ -101,17 +100,20 @@ function Main() {
 		// will not search if query is too short or empty
 		if (input.length > 1) {
 			const timeout = setTimeout(() => {
-				setSearchParams({
+				const params = {
 					class: filters.playerClass,
 					rarity: filters.rarity,
 					type: filters.type,
 					input,
-				});
+				};
+				setSearchParams(params);
 				setDebouncedInput(input);
+				console.log(input);
+				console.log(searchParams.toString());
 				dispatch(
 					postHistory({
 						input,
-						queryString: searchParams.toString(),
+						queryString: new URLSearchParams(params).toString(),
 						date,
 					})
 				);
@@ -140,7 +142,9 @@ function Main() {
 					id="class"
 					label="Класс"
 					requiredOption="Все"
-					options={infoStatusRus ? infoRus?.classes : []}
+					options={
+						infoStatusRus ? infoRus?.classes : [filters.playerClass]
+					}
 					onChange={handleSelect("playerClass")}
 				/>
 				<CustomSelect
@@ -148,7 +152,9 @@ function Main() {
 					id="rarity"
 					label="Редкость"
 					requiredOption="Все"
-					options={infoStatusRus ? infoRus?.qualities : []}
+					options={
+						infoStatusRus ? infoRus?.qualities : [filters.rarity]
+					}
 					onChange={handleSelect("rarity")}
 				/>
 				<CustomSelect
@@ -156,7 +162,7 @@ function Main() {
 					id="type"
 					label="Тип карты"
 					requiredOption="Все"
-					options={infoStatus ? infoRus?.types : []}
+					options={infoStatus ? infoRus?.types : [filters.type]}
 					onChange={handleSelect("type")}
 				/>
 			</div>
